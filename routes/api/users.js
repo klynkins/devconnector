@@ -44,7 +44,7 @@ router.post("/register", (req, res) => {
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
-        avatar,
+        avatar: avatar,
         password: req.body.password
       });
 
@@ -87,16 +87,21 @@ router.post("/login", (req, res) => {
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
         // user matched
-
-        const payload = { id: user.id, name: user.name, avatar }; //create jwt payload
+        console.log("found match");
+        const payload = { id: user.id, name: user.name, avatar: user.avatar }; //create jwt payload
 
         // sign token
-        jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, () => {
-          res.json({
-            success: true,
-            token: "Bearer " + token
-          });
-        });
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          { expiresIn: 3600 },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: "Bearer " + token
+            });
+          }
+        );
       } else {
         errors.password = "Password incorrect";
         return res.status(400).json(errors);
