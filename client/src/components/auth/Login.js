@@ -17,6 +17,12 @@ class Login extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
@@ -32,8 +38,7 @@ class Login extends Component {
 
     const userData = {
       email: this.state.email,
-      password: this.state.password,
-      password2: this.state.password2
+      password: this.state.password
     };
 
     this.props.loginUser(userData);
@@ -66,7 +71,7 @@ class Login extends Component {
                     value={this.state.email}
                     onChange={this.onChange}
                   />
-                  {errors.name && (
+                  {errors.email && (
                     <div className="invalid-feedback">{errors.email}</div>
                   )}
                 </div>
@@ -81,7 +86,7 @@ class Login extends Component {
                     value={this.state.password}
                     onChange={this.onChange}
                   />
-                  {errors.name && (
+                  {errors.password && (
                     <div className="invalid-feedback">{errors.password}</div>
                   )}
                 </div>
