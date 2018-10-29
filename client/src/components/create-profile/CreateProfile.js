@@ -219,4 +219,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(CreateProfile);
-/* test */
