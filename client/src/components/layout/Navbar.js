@@ -96,3 +96,4 @@ export default connect(
   mapStateToProps,
   { logoutUser, clearCurrentProfile }
 )(Navbar);
+/* test */
